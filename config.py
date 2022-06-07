@@ -6,5 +6,5 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 # Enable debug mode.
 DEBUG = True
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://admin@localhost:5432/fyyur'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+SQLALCHEMY_DATABASE_URI = 'postgresql://admin@localhost:5432/fyyur'
+SQLALCHEMY_TRACK_MODIFICATIONS = False
