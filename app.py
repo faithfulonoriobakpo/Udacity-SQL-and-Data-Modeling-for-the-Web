@@ -24,9 +24,6 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://admin@localhost:5432/fyyur'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 #----------------------------------------------------------------------------#
 # Models.
 #----------------------------------------------------------------------------#
