@@ -104,10 +104,10 @@ def index():
 @app.route('/venues')
 def venues():
   data=[]
-  venue_data = Venue.query(Venue.city, Venue.state).distinct().all()
+  venue_data = Venue.query.distinct(Venue.city, Venue.state).all()
 
   for location in venue_data:
-    venues = Venue.query.filter_by(city=city.city, state=city.state).all()
+    venues = Venue.query.filter_by(city=location.city, state=location.state).all()
 
     for venue in venues:
       data.append({
@@ -224,7 +224,7 @@ def artists():
 
 @app.route('/artists/search', methods=['POST'])
 def search_artists():
-  artist_search_result = db.session.query(Artist).filter(
+  artist_search_result = Artist.query.filter(
         Artist.name.ilike('%' + request.form.get('search_term') + '%')).all()
 
   response = {
@@ -243,7 +243,7 @@ def show_artist(artist_id):
     artist = db.session.query(Artist).filter(Artist.id == artist_id).first()
     data = artist.__dict__
 
-    shows = db.session.query(Show).join(
+    shows = Show.query.join(
         Venue, Artist).filter_by(id = artist_id)
     past_shows = shows.filter(Show.start_time < datetime.now()).all()
     upcoming_shows = shows.filter(Show.start_time >= datetime.now()).all()
@@ -269,7 +269,7 @@ def show_artist(artist_id):
 
 @app.route('/artists/<int:artist_id>/edit', methods=['GET'])
 def edit_artist(artist_id):
-    artist = db.session.query(Artist).filter_by(id=artist_id).first()
+    artist = Artist.query.filter_by(id=artist_id).first()
     form = ArtistForm(obj=artist)
     return render_template('forms/edit_artist.html', form=form, artist=artist)
 
@@ -277,7 +277,7 @@ def edit_artist(artist_id):
 @app.route('/artists/<int:artist_id>/edit', methods=['POST'])
 def edit_artist_submission(artist_id):
     form = ArtistForm(request.form)
-    artist = db.session.query(Artist).filter_by(id=artist_id).first()
+    artist = Artist.query.filter_by(id=artist_id).first()
 
     try:
         form.populate_obj(artist)
@@ -295,7 +295,7 @@ def edit_artist_submission(artist_id):
 
 @app.route('/venues/<int:venue_id>/edit', methods=['GET'])
 def edit_venue(venue_id):
-    venue = db.session.query(Venue).filter_by(id=venue_id).first()
+    venue = Venue.query.filter_by(id=venue_id).first()
     form = VenueForm(obj=venue)
     return render_template('forms/edit_venue.html', form=form, venue=venue)
 
@@ -303,7 +303,7 @@ def edit_venue(venue_id):
 @app.route('/venues/<int:venue_id>/edit', methods=['POST'])
 def edit_venue_submission(venue_id):
     form = VenueForm(request.form)
-    venue = db.session.query(Venue).filter_by(id=venue_id).first()
+    venue = Venue.query.filter_by(id=venue_id).first()
 
     try:
         form.populate_obj(venue)
@@ -352,7 +352,7 @@ def create_artist_submission():
 @app.route('/shows')
 def shows():
     data = []
-    shows = db.session.query(Show).join(Artist).join(Venue).all()
+    shows = Show.join(Artist).join(Venue).all()
 
     for show in shows:
         data.append({
