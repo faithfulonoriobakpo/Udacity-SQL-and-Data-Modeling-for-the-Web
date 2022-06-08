@@ -286,7 +286,7 @@ def edit_artist_submission(artist_id):
     except:
         db.session.rollback()
         flash('An error occurred. artist ' +
-              request.form['name'] + ' could not be listed.')
+                request.form['name'] + ' could not be listed.')
     finally:
         db.session.close()
 
@@ -312,7 +312,7 @@ def edit_venue_submission(venue_id):
     except:
         db.session.rollback()
         flash('An error occurred. Venue ' +
-              request.form['name'] + ' could not be listed.')
+                request.form['name'] + ' could not be listed.')
     finally:
         db.session.close()
 
