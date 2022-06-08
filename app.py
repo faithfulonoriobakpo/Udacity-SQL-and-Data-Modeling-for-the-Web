@@ -149,8 +149,8 @@ def show_venue(venue_id):
         show.start_time = show.start_time.strftime('%d-%m-%Y %H:%M')
 
     for show in past_shows:
-        print(show.artist)
-        print(show.venue)
+        print(show.artists)
+        print(show.venues)
         show.start_time = show.start_time.strftime('%d-%m-%Y %H:%M')
 
         data["past_shows"] = past_shows
